@@ -4,7 +4,8 @@ namespace SongAndCash.Repository;
 
 public interface IUserRepository
 {
-    Task<User> GetUser(int id);
-    Task<User> CreateUser(CreateUser createUser);
+    Task<User?> GetUser(int id);
+    Task<User?> GetUserByUsername(string username);
+    Task<User> CreateUser(User createUser);
     Task UpdateUser(User user);
 }

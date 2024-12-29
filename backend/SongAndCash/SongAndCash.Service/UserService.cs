@@ -1,10 +1,11 @@
 using SongAndCash.Exceptions;
 using SongAndCash.Model.Entity;
 using SongAndCash.Repository;
+using SongAndCash.Service.Mapper;
 
 namespace SongAndCash.Service;
 
-public class UserService(IUserRepository userRepository): IUserService
+public class UserService(IUserRepository userRepository, IUserMapper userMapper): IUserService
 {
     public async Task<User> GetUser(int id)
     {
@@ -15,9 +16,20 @@ public class UserService(IUserRepository userRepository): IUserService
     }
 
     public async Task<User> CreateUser(CreateUser createUser)
-    {
-        var createdUser = await userRepository.CreateUser(createUser);
+    {        
+        var existingUser = await GetUserByUsername(createUser.Username);
+        if (existingUser != null) throw new EntityValidationException($"User with username {createUser.Username} already exists.");
+        
+        var userToCreate = userMapper.FromCreateToUser(createUser);
+        var createdUser = await userRepository.CreateUser(userToCreate);
+        
         return createdUser;
+    }
+
+    private async Task<User?> GetUserByUsername(string username)
+    {
+        var user = await userRepository.GetUserByUsername(username);
+        return user;    
     }
 
     public async Task<User> UpdateUser(int id, UpdateUser updateUser)

@@ -86,4 +86,19 @@ public class UserMapper: IUserMapper
             Username = userDto.Username
         };    
     }
+
+    public User FromCreateToUser(CreateUser user)
+    {
+        return new User
+        {
+            SpotifyLink = user.SpotifyLink,
+            Username = user.Username,
+            Email = user.Email,
+        };
+    }
+
+    public User FromUpdateToUser(UpdateUser user)
+    {
+        throw new NotImplementedException();
+    }
 }

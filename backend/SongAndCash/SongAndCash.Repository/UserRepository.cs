@@ -1,21 +1,29 @@
+using Microsoft.EntityFrameworkCore;
 using SongAndCash.Model.Entity;
 
 namespace SongAndCash.Repository;
 
-public class UserRepository: IUserRepository
+public class UserRepository(SongAndCashContext dbContext): IUserRepository
 {
-    public Task<User> GetUser(int id)
+    public async Task<User?> GetUser(int id)
     {
-        throw new NotImplementedException();
+        return await dbContext.Users.FindAsync(id);
     }
 
-    public Task<User> CreateUser(CreateUser createUser)
+    public async Task<User?> GetUserByUsername(string username)
     {
-        throw new NotImplementedException();
+        return await dbContext.Users.FirstOrDefaultAsync(x => x.Username == username);
     }
 
-    public Task UpdateUser(User user)
+    public async Task<User> CreateUser(User user)
     {
-        throw new NotImplementedException();
+        dbContext.Users.Add(user);
+        var result = await dbContext.SaveChangesAsync();
+        return user;
+    }
+
+    public async Task UpdateUser(User user)
+    {
+        await dbContext.SaveChangesAsync();
     }
 }

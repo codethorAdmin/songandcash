@@ -16,4 +16,7 @@ public interface IUserMapper
     UpdateUserDto MapToUpdateUserDto(UpdateUser user);
 
     UpdateUser MapToUpdateUser(UpdateUserDto userDto);
+    
+    User FromCreateToUser(CreateUser user);
+    User FromUpdateToUser(UpdateUser user);
 }

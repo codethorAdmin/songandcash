@@ -14,4 +14,5 @@ public class User
     public DateTime? DateOfBirth { get; set; }
     public string? Nationality { get; set; }
     public string? Iban { get; set; }
+    public List<RecoverableSale> RecoverableSales { get; set; }
 }
