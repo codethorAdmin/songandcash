@@ -7,7 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\SongAndCash.Exceptions\SongAndCash.Exceptions.csproj" />
       <ProjectReference Include="..\SongAndCash.Model\SongAndCash.Model.csproj" />
+      <ProjectReference Include="..\SongAndCash.Repository\SongAndCash.Repository.csproj" />
     </ItemGroup>
 
     <ItemGroup>

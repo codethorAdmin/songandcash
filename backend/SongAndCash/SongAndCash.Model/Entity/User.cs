@@ -8,7 +8,7 @@ public class User
     public required string SpotifyLink { get; set; }
     
     public bool? IsCompany { get; set; }
-    public bool? FiscalIdentificationNumber { get; set; }
+    public string? FiscalIdentificationNumber { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public DateTime? DateOfBirth { get; set; }

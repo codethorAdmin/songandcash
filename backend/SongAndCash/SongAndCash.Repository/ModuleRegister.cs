@@ -6,6 +6,6 @@ public static class ModuleRegister
 {
     public static void RegisterRepositories(this IServiceCollection services)
     {
-        
+        services.AddScoped<IUserRepository, UserRepository>();
     }
 }

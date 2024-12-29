@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\SongAndCash.Model\SongAndCash.Model.csproj" />
+      <ProjectReference Include="..\SongAndCash.Repository\SongAndCash.Repository.csproj" />
       <ProjectReference Include="..\SongAndCash.Service\SongAndCash.Service.csproj" />
     </ItemGroup>
 
