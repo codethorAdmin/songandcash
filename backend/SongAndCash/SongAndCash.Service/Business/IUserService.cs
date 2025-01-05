@@ -1,7 +1,6 @@
-using SongAndCash.Model.Dto;
 using SongAndCash.Model.Entity;
 
-namespace SongAndCash.Service;
+namespace SongAndCash.Service.Business;
 
 public interface IUserService
 {

@@ -3,7 +3,7 @@ using SongAndCash.Model.Entity;
 using SongAndCash.Repository;
 using SongAndCash.Service.Mapper;
 
-namespace SongAndCash.Service;
+namespace SongAndCash.Service.Business;
 
 public class UserService(IUserRepository userRepository, IUserMapper userMapper): IUserService
 {
