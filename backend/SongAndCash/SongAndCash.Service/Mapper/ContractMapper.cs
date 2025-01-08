@@ -16,4 +16,21 @@ public class ContractMapper(IRecoverableSalesMapper recoverableSalesMapper) : IC
             RecoverableId = contract.RecoverableId,
         };
     }
+
+    public ContractDetails FromContractDetailsDtoToContractDetails(
+        ContractDetailsDto contractDetailsDto
+    )
+    {
+        return new ContractDetails
+        {
+            Name = contractDetailsDto.Name,
+            Swift = contractDetailsDto.Swift,
+            CompleteAddress = contractDetailsDto.CompleteAddress,
+            FiscalNumber = contractDetailsDto.FiscalNumber,
+            LastName = contractDetailsDto.LastName,
+            CountryOfResidence = contractDetailsDto.CountryOfResidence,
+            DateOfBirth = contractDetailsDto.DateOfBirth,
+            IBAN = contractDetailsDto.IBAN,
+        };
+    }
 }

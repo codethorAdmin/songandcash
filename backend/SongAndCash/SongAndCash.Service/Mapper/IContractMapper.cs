@@ -6,4 +6,5 @@ namespace SongAndCash.Service.Mapper;
 public interface IContractMapper
 {
     ContractDto MapToContractDto(Contract contract);
+    ContractDetails FromContractDetailsDtoToContractDetails(ContractDetailsDto contractDetailsDto);
 }

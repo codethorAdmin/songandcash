@@ -1,3 +1,4 @@
+using SongAndCash.Model.Dto;
 using SongAndCash.Model.Entity;
 
 namespace SongAndCash.Service.Business;
@@ -11,5 +12,9 @@ public interface IRecoverableSalesService
     Task<bool> Reject(int userId, int recoverableSaleId, string? rejectBodyReason);
     Task<bool> PreAcceptByAdmin(int userId, int recoverableSaleId, Proposal proposal);
     Task<bool> AcceptByArtist(int userId, int recoverableSaleId, Proposal proposal);
-    Task<Contract> GenerateContract(int userId, int recoverableSaleId, Contract contract);
+    Task<Contract> GenerateContract(
+        int userId,
+        int recoverableSaleId,
+        ContractDetails contractDetails
+    );
 }

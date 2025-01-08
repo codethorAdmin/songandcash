@@ -1,4 +1,5 @@
 using SongAndCash.Exceptions;
+using SongAndCash.Model.Dto;
 using SongAndCash.Model.Entity;
 using SongAndCash.Model.Enum;
 using SongAndCash.Repository;
@@ -249,7 +250,7 @@ public class RecoverableSalesService(
     public async Task<Contract> GenerateContract(
         int userId,
         int recoverableSaleId,
-        Contract contract
+        ContractDetails contractDetails
     )
     {
         // TODO: review this user can create for the specified user id (or if auto-calculate the id from JWT Token)
@@ -276,13 +277,17 @@ public class RecoverableSalesService(
 
         recoverableSale.Status = RecoverableSaleStatus.ContractGenerated;
         recoverableSale.RejectionReason = string.Empty;
+
         var updated = await recoverableSalesRepository.Update(recoverableSale);
         if (updated)
         {
-            var newContract = await contractService.CreateContract(recoverableSale);
+            var newContract = await contractService.CreateContract(
+                contractDetails,
+                recoverableSale
+            );
             await emailService.SendEmailToAdmin(
                 recoverableSale,
-                "Se ha generado un nuevo contrato para el artista"
+                "Se ha firmado un nuevo contrato para el artista"
             );
             return newContract;
         }

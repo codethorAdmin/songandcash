@@ -175,7 +175,7 @@ public static class RecoverableSalesEndpoints
                     return Results.BadRequest();
                 }
 
-                var newContract = await recoverableSalesService.AcceptByArtist(
+                var isAcceptedByArtist = await recoverableSalesService.AcceptByArtist(
                     userId,
                     recoverableSaleId,
                     new Proposal()
@@ -184,8 +184,43 @@ public static class RecoverableSalesEndpoints
                         MoneyToReturn = proposal.MoneyToReturn,
                     }
                 );
+                if (!isAcceptedByArtist)
+                {
+                    return Results.UnprocessableEntity(
+                        "The recoverable sale could not be accepted by the artist."
+                    );
+                }
+
                 return Results.Accepted();
-                // return Results.Created($"/users/{userId}/recoverablesales/{recoverableSaleId}/contracts/{newContract.Id}", newContract);
+            }
+        );
+
+        app.MapPost(
+            "/users/{userId}/recoverablesales/{recoverableSaleId}/fillcontract",
+            async (
+                int userId,
+                int recoverableSaleId,
+                HttpContext context,
+                IRecoverableSalesService recoverableSalesService,
+                IContractMapper contractMapper
+            ) =>
+            {
+                var contractDetailsDto = await GetRequestBody<ContractDetailsDto>(context);
+                if (contractDetailsDto == null)
+                {
+                    return Results.BadRequest();
+                }
+
+                var newContract = await recoverableSalesService.GenerateContract(
+                    userId,
+                    recoverableSaleId,
+                    contractMapper.FromContractDetailsDtoToContractDetails(contractDetailsDto)
+                );
+
+                return Results.Created(
+                    $"/users/{userId}/recoverablesales/{recoverableSaleId}/contracts/{newContract.Id}",
+                    newContract
+                );
             }
         );
 
