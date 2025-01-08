@@ -4,5 +4,8 @@ namespace SongAndCash.Service.Business;
 
 public interface IEmailService
 {
-    Task SendEmailToAdmin(RecoverableSale recoverableSale);
+    Task SendEmailToAdmin(
+        RecoverableSale recoverableSale,
+        string seHaGeneradoUnaNuevaVentaRecuperable
+    );
 }

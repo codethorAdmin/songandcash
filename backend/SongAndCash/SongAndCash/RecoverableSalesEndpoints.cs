@@ -151,12 +151,41 @@ public static class RecoverableSalesEndpoints
                     recoverableSaleId,
                     new Proposal()
                     {
-                        MoneyForArtis = proposal.MoneyForArtis,
+                        MoneyForArtist = proposal.MoneyForArtist,
                         MoneyToReturn = proposal.MoneyToReturn,
                     }
                 );
 
                 return Results.Accepted();
+            }
+        );
+
+        app.MapPost(
+            "/users/{userId}/recoverablesales/{recoverableSaleId}/accept",
+            async (
+                int userId,
+                int recoverableSaleId,
+                HttpContext context,
+                IRecoverableSalesService recoverableSalesService
+            ) =>
+            {
+                var proposal = await GetRequestBody<ProposalDto>(context);
+                if (proposal == null)
+                {
+                    return Results.BadRequest();
+                }
+
+                var newContract = await recoverableSalesService.AcceptByArtist(
+                    userId,
+                    recoverableSaleId,
+                    new Proposal()
+                    {
+                        MoneyForArtist = proposal.MoneyForArtist,
+                        MoneyToReturn = proposal.MoneyToReturn,
+                    }
+                );
+                return Results.Accepted();
+                // return Results.Created($"/users/{userId}/recoverablesales/{recoverableSaleId}/contracts/{newContract.Id}", newContract);
             }
         );
 

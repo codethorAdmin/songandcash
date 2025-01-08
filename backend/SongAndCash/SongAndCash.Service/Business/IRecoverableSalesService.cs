@@ -10,4 +10,6 @@ public interface IRecoverableSalesService
     Task<bool> MarkUnderStudy(int userId, int recoverableSaleId);
     Task<bool> Reject(int userId, int recoverableSaleId, string? rejectBodyReason);
     Task<bool> PreAcceptByAdmin(int userId, int recoverableSaleId, Proposal proposal);
+    Task<bool> AcceptByArtist(int userId, int recoverableSaleId, Proposal proposal);
+    Task<Contract> GenerateContract(int userId, int recoverableSaleId, Contract contract);
 }

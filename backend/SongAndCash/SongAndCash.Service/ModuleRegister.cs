@@ -12,5 +12,7 @@ public static class ModuleRegister
         services.AddScoped<IRecoverableSalesService, RecoverableSalesService>();
         services.AddScoped<IUserMapper, UserMapper>();
         services.AddScoped<IRecoverableSalesMapper, RecoverableSalesMapper>();
+        services.AddScoped<IContractService, ContractService>();
+        services.AddScoped<IContractMapper, ContractMapper>();
     }
 }
