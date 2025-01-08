@@ -21,5 +21,7 @@ public class RecoverableSaleDto
     public DateTime ExtraordinaryEndDate { get; set; }
 
     public double FinalPaymentToArtist { get; set; }
-    public string RejectionReason { get; set; }
+    public double FinalPaymentToReturn { get; set; }
+
+    public string? RejectionReason { get; set; }
 }

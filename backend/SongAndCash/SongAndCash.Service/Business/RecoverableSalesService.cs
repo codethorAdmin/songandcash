@@ -114,4 +114,35 @@ public class RecoverableSalesService(
         var hasBeenMarkedUnderStudy = await recoverableSalesRepository.Update(recoverableSale);
         return hasBeenMarkedUnderStudy;
     }
+
+    public async Task<bool> PreAcceptByAdmin(int userId, int recoverableSaleId, Proposal proposal)
+    {
+        // TODO: review this user can create for the specified user id (or if auto-calculate the id from JWT Token)
+        var user = await userService.GetUser(userId);
+        if (user == null)
+        {
+            throw new EntityValidationException("Invalid user");
+        }
+
+        var recoverableSale = await recoverableSalesRepository.GetRecoverableSale(
+            recoverableSaleId
+        );
+        if (user.Id != recoverableSale.UserId)
+        {
+            throw new EntityValidationException("Invalid user");
+        }
+
+        if (recoverableSale.Status == RecoverableSaleStatus.Rejected)
+        {
+            throw new EntityValidationException("The recoverable sale was already pre-accepted.");
+        }
+
+        recoverableSale.Status = RecoverableSaleStatus.PreAccepted;
+        recoverableSale.RejectionReason = string.Empty;
+        recoverableSale.FinalPaymentToArtist = proposal.MoneyForArtis;
+        recoverableSale.FinalPaymentToReturn = proposal.MoneyToReturn;
+
+        var preAccepted = await recoverableSalesRepository.Update(recoverableSale);
+        return preAccepted;
+    }
 }

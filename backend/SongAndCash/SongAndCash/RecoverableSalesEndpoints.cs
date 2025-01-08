@@ -1,5 +1,6 @@
 using System.Text.Json;
 using SongAndCash.Model.Dto;
+using SongAndCash.Model.Entity;
 using SongAndCash.Service.Business;
 using SongAndCash.Service.Mapper;
 
@@ -125,6 +126,35 @@ public static class RecoverableSalesEndpoints
                         "The recoverable study could not be rejected."
                     );
                 }
+
+                return Results.Accepted();
+            }
+        );
+
+        app.MapPost(
+            "/users/{userId}/recoverablesales/{recoverableSaleId}/preaccept",
+            async (
+                int userId,
+                int recoverableSaleId,
+                HttpContext context,
+                IRecoverableSalesService recoverableSalesService
+            ) =>
+            {
+                var proposal = await GetRequestBody<ProposalDto>(context);
+                if (proposal == null)
+                {
+                    return Results.BadRequest();
+                }
+
+                var hasBeenPreAccepted = await recoverableSalesService.PreAcceptByAdmin(
+                    userId,
+                    recoverableSaleId,
+                    new Proposal()
+                    {
+                        MoneyForArtis = proposal.MoneyForArtis,
+                        MoneyToReturn = proposal.MoneyToReturn,
+                    }
+                );
 
                 return Results.Accepted();
             }

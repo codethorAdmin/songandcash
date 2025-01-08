@@ -51,6 +51,7 @@ public class RecoverableSalesMapper : IRecoverableSalesMapper
             StartDate = recoverableSaleDetails.StartDate,
             ExtraordinaryEndDate = recoverableSaleDetails.ExtraordinaryEndDate,
             FinalPaymentToArtist = recoverableSaleDetails.FinalPaymentToArtist,
+            FinalPaymentToReturn = recoverableSaleDetails.FinalPaymentToReturn,
             RejectionReason = recoverableSaleDetails.RejectionReason,
         };
     }
