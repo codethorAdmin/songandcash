@@ -4,7 +4,7 @@ public enum RecoverableSaleStatus
 {
     Sent = 0,
     UnderStudy = 1,
-    Cancelled = 2,
+    Rejected = 2,
     PreAccepted = 3,
     EvaluationByArtist = 4,
     CancelledByArtist = 5,

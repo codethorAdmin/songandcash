@@ -7,12 +7,12 @@ public class RecoverableSaleDto
 {
     public int Id { get; set; }
     public RecoverableSaleStatus Status { get; set; }
-    
+
     public User User { get; set; }
     public int UserId { get; set; }
 
     public IList<object> LastSixMonthsSettlement { get; set; } = [];
-    
+
     public double EstimatedMonthlyBillingByArtist { get; set; }
     public double EstimatedPaymentToArtist { get; set; }
 
@@ -21,4 +21,5 @@ public class RecoverableSaleDto
     public DateTime ExtraordinaryEndDate { get; set; }
 
     public double FinalPaymentToArtist { get; set; }
+    public string RejectionReason { get; set; }
 }

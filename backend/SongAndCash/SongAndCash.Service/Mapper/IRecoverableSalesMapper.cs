@@ -5,6 +5,12 @@ namespace SongAndCash.Service.Mapper;
 
 public interface IRecoverableSalesMapper
 {
-    CreateRecoverableSale MapToCreateRecoverableSale(CreateRecoverableSaleDto createRecoverableSaleDto);
-    RecoverableSale FromCreateToRecoverableSale(CreateRecoverableSale createRecoverableSale);
+    CreateRecoverableSale MapToCreateRecoverableSale(
+        CreateRecoverableSaleDto createRecoverableSaleDto
+    );
+    RecoverableSale FromCreateToRecoverableSale(
+        CreateRecoverableSale createRecoverableSale,
+        int userId
+    );
+    RecoverableSaleDto MapToRecoverableSaleDto(RecoverableSale recoverableSaleDetails);
 }

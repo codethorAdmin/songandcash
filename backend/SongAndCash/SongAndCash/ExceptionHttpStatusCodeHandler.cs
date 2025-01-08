@@ -9,8 +9,9 @@ public static class ExceptionHttpStatusCodeHandler
         return exception switch
         {
             UnauthorizedAccessException => StatusCodes.Status401Unauthorized,
-            EntityNotFoundException or EntityValidationException => StatusCodes.Status404NotFound,
-            _ => StatusCodes.Status500InternalServerError
+            EntityValidationException => StatusCodes.Status422UnprocessableEntity,
+            EntityNotFoundException => StatusCodes.Status404NotFound,
+            _ => StatusCodes.Status500InternalServerError,
         };
     }
 }
