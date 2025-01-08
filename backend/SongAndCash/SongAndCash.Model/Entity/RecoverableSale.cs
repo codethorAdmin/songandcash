@@ -21,4 +21,7 @@ public class RecoverableSale
     public double FinalPaymentToArtist { get; set; }
     public double FinalPaymentToReturn { get; set; }
     public string? RejectionReason { get; set; }
+
+    public int ContractId { get; set; }
+    public Contract Contract { get; set; }
 }

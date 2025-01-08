@@ -14,5 +14,6 @@ public static class ModuleRegister
         services.AddScoped<IRecoverableSalesMapper, RecoverableSalesMapper>();
         services.AddScoped<IContractService, ContractService>();
         services.AddScoped<IContractMapper, ContractMapper>();
+        services.AddScoped<IEmailClient, EmailClient>();
     }
 }

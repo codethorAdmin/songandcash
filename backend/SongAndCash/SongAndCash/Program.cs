@@ -1,4 +1,5 @@
 using SongAndCash;
+using SongAndCash.Model.Configuration;
 using SongAndCash.Repository;
 using SongAndCash.Service;
 
@@ -6,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.RegisterServices();
 builder.Services.RegisterRepositories();
+
+builder.Services.Configure<GlobalConfiguration>(builder.Configuration);
 
 var app = builder.Build();
 

@@ -11,7 +11,7 @@ public class RecoverableSalesService(
     IUserService userService,
     IRecoverableSalesMapper recoverableSalesMapper,
     IRecoverableSalesRepository recoverableSalesRepository,
-    IEmailService emailService,
+    IEmailClient emailClient,
     IContractService contractService
 ) : IRecoverableSalesService
 {
@@ -50,7 +50,7 @@ public class RecoverableSalesService(
             recoverableSaleToCreate
         );
 
-        await emailService.SendEmailToAdmin(
+        await emailClient.SendEmailToAdmin(
             createdRecoverableSale,
             "Se ha generado una nueva venta recuperable"
         );
@@ -91,7 +91,7 @@ public class RecoverableSalesService(
 
         if (hasBeenMarkedUnderStudy)
         {
-            await emailService.SendEmailToAdmin(
+            await emailClient.SendEmailToAdmin(
                 recoverableSale,
                 "Se ha marcado como estudio una venta recuperable"
             );
@@ -128,7 +128,7 @@ public class RecoverableSalesService(
         var hasBeenRejected = await recoverableSalesRepository.Update(recoverableSale);
         if (hasBeenRejected)
         {
-            await emailService.SendEmailToAdmin(
+            await emailClient.SendEmailToAdmin(
                 recoverableSale,
                 "Se ha cancelado una venta recuperable"
             );
@@ -181,7 +181,7 @@ public class RecoverableSalesService(
         var preAccepted = await recoverableSalesRepository.Update(recoverableSale);
         if (preAccepted)
         {
-            await emailService.SendEmailToAdmin(
+            await emailClient.SendEmailToAdmin(
                 recoverableSale,
                 "Se ha pre-aceptado una venta recuperable"
             );
@@ -234,7 +234,7 @@ public class RecoverableSalesService(
         var accepted = await recoverableSalesRepository.Update(recoverableSale);
         if (accepted)
         {
-            await emailService.SendEmailToAdmin(
+            await emailClient.SendEmailToAdmin(
                 recoverableSale,
                 "Se ha aceptado una venta recuperable por el artista"
             );
@@ -285,7 +285,7 @@ public class RecoverableSalesService(
                 contractDetails,
                 recoverableSale
             );
-            await emailService.SendEmailToAdmin(
+            await emailClient.SendEmailToAdmin(
                 recoverableSale,
                 "Se ha firmado un nuevo contrato para el artista"
             );
