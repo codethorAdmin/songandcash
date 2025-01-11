@@ -22,8 +22,8 @@ public class ContractService(IContractRepository contractRepository) : IContract
         return contract;
     }
 
-    public Task Update(Contract newContract)
+    public async Task Update(Contract newContract)
     {
-        throw new NotImplementedException();
+        await contractRepository.Update(newContract);
     }
 }

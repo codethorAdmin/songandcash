@@ -2,7 +2,7 @@ using SongAndCash.Model.Entity;
 
 namespace SongAndCash.Repository;
 
-public interface IRecoverableSalesRepository
+public interface IRecoverableSalesRepository : IBaseRepository
 {
     Task<RecoverableSale> CreateRecoverableSale(RecoverableSale recoverableSaleToCreate);
     Task<RecoverableSale> GetRecoverableSale(int recoverableSaleId);
