@@ -12,6 +12,13 @@ builder.Services.Configure<GlobalConfiguration>(builder.Configuration);
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<SongAndCashContext>();
+    await dbContext.Database.EnsureCreatedAsync();
+    await DatabaseMigrator.MigrateDatabase(dbContext);
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();

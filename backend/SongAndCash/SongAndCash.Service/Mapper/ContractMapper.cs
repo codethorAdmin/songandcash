@@ -13,7 +13,7 @@ public class ContractMapper(IRecoverableSalesMapper recoverableSalesMapper) : IC
             RecoverableSale = recoverableSalesMapper.MapToRecoverableSaleDto(
                 contract.RecoverableSale
             ),
-            RecoverableId = contract.RecoverableId,
+            RecoverableSaleId = contract.RecoverableSaleId,
         };
     }
 

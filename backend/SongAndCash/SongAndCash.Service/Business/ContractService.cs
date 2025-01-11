@@ -13,7 +13,7 @@ public class ContractService(IContractRepository contractRepository) : IContract
     {
         var contract = new Contract
         {
-            RecoverableId = recoverableSale.Id,
+            RecoverableSaleId = recoverableSale.Id,
             ContractFilePath = Guid.NewGuid().ToString(),
         };
 

@@ -10,7 +10,7 @@ public class RecoverableSale
     public User User { get; set; }
     public int UserId { get; set; }
 
-    public IList<object> LastSixMonthsSettlement { get; set; } = [];
+    public List<string> LastSixMonthsSettlement { get; set; } = [];
 
     public double EstimatedMonthlyBillingByArtist { get; set; }
     public double EstimatedPaymentToArtist { get; set; }
@@ -22,6 +22,6 @@ public class RecoverableSale
     public double FinalPaymentToReturn { get; set; }
     public string? RejectionReason { get; set; }
 
-    public int ContractId { get; set; }
-    public Contract Contract { get; set; }
+    public int? ContractId { get; set; }
+    public Contract? Contract { get; set; }
 }

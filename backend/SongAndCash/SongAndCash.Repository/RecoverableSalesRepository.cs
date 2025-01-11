@@ -1,22 +1,27 @@
+using Microsoft.EntityFrameworkCore;
 using SongAndCash.Model.Entity;
 
 namespace SongAndCash.Repository;
 
-public class RecoverableSalesRepository : IRecoverableSalesRepository
+public class RecoverableSalesRepository(SongAndCashContext dbContext) : IRecoverableSalesRepository
 {
-    public Task<RecoverableSale> CreateRecoverableSale(RecoverableSale recoverableSaleToCreate)
+    public async Task<RecoverableSale> CreateRecoverableSale(
+        RecoverableSale recoverableSaleToCreate
+    )
     {
-        throw new NotImplementedException();
+        dbContext.RecoverableSales.Add(recoverableSaleToCreate);
+        var result = await dbContext.SaveChangesAsync();
+        return recoverableSaleToCreate;
     }
 
-    public Task<RecoverableSale> GetRecoverableSale(int recoverableSaleId)
+    public async Task<RecoverableSale> GetRecoverableSale(int recoverableSaleId)
     {
-        throw new NotImplementedException();
+        return await dbContext.RecoverableSales.FindAsync(recoverableSaleId);
     }
 
-    public Task<List<RecoverableSale>> GetRecoverableSales(int userId)
+    public async Task<List<RecoverableSale>> GetRecoverableSales(int userId)
     {
-        throw new NotImplementedException();
+        return await dbContext.RecoverableSales.ToListAsync();
     }
 
     public Task<bool> Update(RecoverableSale recoverableSale)

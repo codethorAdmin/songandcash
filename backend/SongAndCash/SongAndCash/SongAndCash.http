@@ -1,6 +1,31 @@
-@SongAndCash_HostAddress = http://localhost:5223
+@SongAndCash_HostAddress = https://localhost:7167
 
 GET {{SongAndCash_HostAddress}}/users/1
 Accept: application/json
 
 ###
+
+POST {{SongAndCash_HostAddress}}/users/
+Content-Type: application/json
+
+{
+  "Email": "Job@Max3:15",
+  "Username": "Job",
+  "SpotifyLink": "https://open.spotify.com/track/3KkXRkHbMCARz0aVfEt68P?si=3b1e"
+}
+
+###
+
+POST {{SongAndCash_HostAddress}}/users/1/recoverablesales/create
+Content-Type: application/json
+
+{
+  "UserId": 1,
+  "EstimatedMonthlyBillingByArtist": 1000,
+  "EstimatedPaymentToArtist": 1200
+}
+
+###
+
+GET {{SongAndCash_HostAddress}}/users/1/recoverablesales/1
+Accept: application/json

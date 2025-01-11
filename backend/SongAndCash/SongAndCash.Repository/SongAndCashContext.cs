@@ -9,6 +9,13 @@ public class SongAndCashContext(DbContextOptions<SongAndCashContext> options) : 
     public DbSet<RecoverableSale> RecoverableSales { get; set; }
     public DbSet<Contract> Contracts { get; set; }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+
+        optionsBuilder.EnableDetailedErrors().EnableSensitiveDataLogging();
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -38,11 +45,13 @@ public class SongAndCashContext(DbContextOptions<SongAndCashContext> options) : 
         {
             entity.ToTable("Contracts");
             entity.HasKey(p => p.Id);
+
             entity
                 .HasOne(p => p.RecoverableSale)
                 .WithOne(p => p.Contract)
-                .HasForeignKey<RecoverableSale>(x => x.ContractId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey<Contract>(x => x.RecoverableSaleId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.SetNull);
         });
     }
 }

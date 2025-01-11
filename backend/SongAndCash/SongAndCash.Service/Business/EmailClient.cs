@@ -1,4 +1,5 @@
 using System.Net.Mail;
+using Microsoft.Extensions.Options;
 using SongAndCash.Model.Configuration;
 using SongAndCash.Model.Entity;
 
@@ -8,9 +9,9 @@ public class EmailClient : IEmailClient
 {
     private readonly SmtpClient _smtpClient;
 
-    public EmailClient(GlobalConfiguration configuration)
+    public EmailClient(IOptions<GlobalConfiguration> configuration)
     {
-        _smtpClient = new SmtpClient(configuration.Email.Host, configuration.Email.Port)
+        _smtpClient = new SmtpClient(configuration.Value.Email.Host, configuration.Value.Email.Port)
         {
             // MailHog doesn't require authentication
             UseDefaultCredentials = false,
