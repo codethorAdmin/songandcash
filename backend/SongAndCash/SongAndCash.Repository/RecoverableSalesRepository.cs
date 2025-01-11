@@ -24,8 +24,9 @@ public class RecoverableSalesRepository(SongAndCashContext dbContext) : IRecover
         return await dbContext.RecoverableSales.ToListAsync();
     }
 
-    public Task<bool> Update(RecoverableSale recoverableSale)
+    public async Task<bool> Update(RecoverableSale recoverableSale)
     {
-        throw new NotImplementedException();
+        var result = await dbContext.SaveChangesAsync();
+        return result >= 1;
     }
 }

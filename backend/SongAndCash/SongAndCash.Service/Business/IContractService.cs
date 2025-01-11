@@ -6,4 +6,5 @@ namespace SongAndCash.Service.Business;
 public interface IContractService
 {
     Task<Contract> CreateContract(ContractDetails contractDetails, RecoverableSale recoverableSale);
+    Task Update(Contract newContract);
 }

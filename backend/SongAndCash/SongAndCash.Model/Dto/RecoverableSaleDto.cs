@@ -11,6 +11,7 @@ public class RecoverableSaleDto
     public User User { get; set; }
     public int UserId { get; set; }
 
+    // base64 excel files
     public List<string> LastSixMonthsSettlement { get; set; } = [];
 
     public double EstimatedMonthlyBillingByArtist { get; set; }

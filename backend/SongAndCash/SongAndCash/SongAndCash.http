@@ -9,8 +9,8 @@ POST {{SongAndCash_HostAddress}}/users/
 Content-Type: application/json
 
 {
-  "Email": "Job@Max3:15",
-  "Username": "Job",
+  "Email": "Jacob@Max8:12",
+  "Username": "Joby",
   "SpotifyLink": "https://open.spotify.com/track/3KkXRkHbMCARz0aVfEt68P?si=3b1e"
 }
 
@@ -27,5 +27,46 @@ Content-Type: application/json
 
 ###
 
-GET {{SongAndCash_HostAddress}}/users/1/recoverablesales/1
+GET {{SongAndCash_HostAddress}}/users/1/recoverablesales/6
 Accept: application/json
+
+###
+
+POST {{SongAndCash_HostAddress}}/users/1/recoverablesales/1/markUnderStudy
+Content-Type: application/json
+
+###
+
+POST {{SongAndCash_HostAddress}}/users/1/recoverablesales/1/preaccept
+Content-Type: application/json
+
+{
+  "MoneyForArtist": 1050,
+  "MoneyToReturn": 1400
+}
+
+###
+
+POST {{SongAndCash_HostAddress}}/users/1/recoverablesales/1/accept
+Content-Type: application/json
+
+{
+  "MoneyForArtist": 1050,
+  "MoneyToReturn": 1400
+}
+
+###
+
+POST {{SongAndCash_HostAddress}}/users/1/recoverablesales/1/fillcontract
+Content-Type: application/json
+
+{
+  "Name": "John",
+  "LastName": "Doe",
+  "DateOfBirth": "1985-07-16T00:00:00",
+  "FiscalNumber": "123456789",
+  "IBAN": "GB82WEST12345698765432",
+  "Swift": "WESTGB2L",
+  "CountryOfResidence": "United Kingdom",
+  "CompleteAddress": "123 Main Street, London, SW1A 1AA"
+}

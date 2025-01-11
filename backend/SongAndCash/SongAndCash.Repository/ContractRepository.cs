@@ -2,10 +2,12 @@ using SongAndCash.Model.Entity;
 
 namespace SongAndCash.Repository;
 
-public class ContractRepository : IContractRepository
+public class ContractRepository(SongAndCashContext context) : IContractRepository
 {
-    public Task<Contract> CreateContract(Contract contractToCreate)
+    public async Task<Contract> CreateContract(Contract contractToCreate)
     {
-        throw new NotImplementedException();
+        context.Contracts.Add(contractToCreate);
+        _ = await context.SaveChangesAsync();
+        return contractToCreate;
     }
 }

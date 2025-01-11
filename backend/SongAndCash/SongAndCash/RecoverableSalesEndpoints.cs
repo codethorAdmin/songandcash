@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 using SongAndCash.Model.Dto;
 using SongAndCash.Model.Entity;
 using SongAndCash.Service.Business;
@@ -26,6 +27,7 @@ public static class RecoverableSalesEndpoints
                 return Results.Ok(recoverableSalesDto);
             }
         );
+
         app.MapGet(
             "/users/{userId}/recoverablesales/{recoverableSaleId}",
             async (
@@ -44,6 +46,36 @@ public static class RecoverableSalesEndpoints
                 );
 
                 return Results.Ok(recoverableSalesDetailsDto);
+            }
+        );
+
+        app.MapGet(
+            "/users/{userId}/recoverablesales/{recoverableSaleId}/lastsixmonthsettlement",
+            async (
+                int userId,
+                int recoverableSaleId,
+                IRecoverableSalesService recoverableSalesService
+            ) =>
+            {
+                (byte[] content, string contentType)[] lastSixMonthSettlementFiles =
+                    await recoverableSalesService.GetRecoverableSaleLastSixMonthSettlements(
+                        userId,
+                        recoverableSaleId
+                    );
+
+                var files = lastSixMonthSettlementFiles.Select(
+                    (x, i) => // create a file from the bytes
+                    {
+                        var file = new FileContentResult(x.content, x.contentType)
+                        {
+                            FileDownloadName = $"last-six-month-settlement-{i}.xlsx",
+                        };
+
+                        return file;
+                    }
+                );
+
+                return Results.Ok(files);
             }
         );
 
@@ -231,6 +263,11 @@ public static class RecoverableSalesEndpoints
     {
         using var reader = new StreamReader(context.Request.Body);
         var bodyText = await reader.ReadToEndAsync();
+        if (string.IsNullOrEmpty(bodyText))
+        {
+            return default;
+        }
+
         return JsonSerializer.Deserialize<T>(bodyText);
     }
 }

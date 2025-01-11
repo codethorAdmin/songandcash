@@ -14,6 +14,15 @@ public class ContractMapper(IRecoverableSalesMapper recoverableSalesMapper) : IC
                 contract.RecoverableSale
             ),
             RecoverableSaleId = contract.RecoverableSaleId,
+            DocumentId = contract.DocumentId,
+            Name = contract.Name,
+            LastName = contract.LastName,
+            DateOfBirth = contract.DateOfBirth,
+            FiscalNumber = contract.FiscalNumber,
+            IBAN = contract.IBAN,
+            Swift = contract.Swift,
+            CountryOfResidence = contract.CountryOfResidence,
+            CompleteAddress = contract.CompleteAddress,
         };
     }
 

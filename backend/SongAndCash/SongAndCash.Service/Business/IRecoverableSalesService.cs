@@ -17,4 +17,9 @@ public interface IRecoverableSalesService
         int recoverableSaleId,
         ContractDetails contractDetails
     );
+
+    Task<(byte[] content, string contentType)[]> GetRecoverableSaleLastSixMonthSettlements(
+        int userId,
+        int recoverableSaleId
+    );
 }

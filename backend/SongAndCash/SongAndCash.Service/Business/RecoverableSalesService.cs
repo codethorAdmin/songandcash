@@ -12,7 +12,8 @@ public class RecoverableSalesService(
     IRecoverableSalesMapper recoverableSalesMapper,
     IRecoverableSalesRepository recoverableSalesRepository,
     IEmailClient emailClient,
-    IContractService contractService
+    IContractService contractService,
+    IDocumentService documentService
 ) : IRecoverableSalesService
 {
     public async Task<RecoverableSale> GetRecoverableSale(int userId, int recoverableSaleId)
@@ -20,7 +21,7 @@ public class RecoverableSalesService(
         var recoverableSale = await recoverableSalesRepository.GetRecoverableSale(
             recoverableSaleId
         );
-        if (recoverableSale == null || recoverableSale.UserId == userId)
+        if (recoverableSale == null || recoverableSale.UserId != userId)
         {
             // If the specified user does not match the owner of the recoverable sale, send not found for security.
             throw new EntityNotFoundException(
@@ -285,6 +286,16 @@ public class RecoverableSalesService(
                 contractDetails,
                 recoverableSale
             );
+
+            var documentId = await documentService.SendDocumentToSign(
+                user,
+                recoverableSale,
+                newContract
+            );
+
+            newContract.DocumentId = documentId;
+            await contractService.Update(newContract);
+
             await emailClient.SendEmailToAdmin(
                 recoverableSale,
                 "Se ha firmado un nuevo contrato para el artista"
@@ -293,5 +304,30 @@ public class RecoverableSalesService(
         }
 
         throw new EntityValidationException("Contract cannot be generated.");
+    }
+
+    public async Task<(
+        byte[] content,
+        string contentType
+    )[]> GetRecoverableSaleLastSixMonthSettlements(int userId, int recoverableSaleId)
+    {
+        var recoverableSale = await recoverableSalesRepository.GetRecoverableSale(
+            recoverableSaleId
+        );
+        if (recoverableSale == null || recoverableSale.UserId != userId)
+        {
+            throw new EntityNotFoundException(
+                $"Recoverable sale with id {recoverableSaleId} was not found."
+            );
+        }
+
+        return recoverableSale
+            .LastSixMonthsSettlement.Select(x =>
+                (
+                    Convert.FromBase64String(x),
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                )
+            )
+            .ToArray();
     }
 }

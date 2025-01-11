@@ -14,11 +14,16 @@ public class ContractService(IContractRepository contractRepository) : IContract
         var contract = new Contract
         {
             RecoverableSaleId = recoverableSale.Id,
-            ContractFilePath = Guid.NewGuid().ToString(),
+            DocumentId = Guid.NewGuid().ToString(),
         };
 
         await contractRepository.CreateContract(contract);
 
         return contract;
+    }
+
+    public Task Update(Contract newContract)
+    {
+        throw new NotImplementedException();
     }
 }
