@@ -16,5 +16,6 @@ public static class ModuleRegister
         services.AddScoped<IContractMapper, ContractMapper>();
         services.AddScoped<IEmailClient, EmailClient>();
         services.AddScoped<IDocumentService, DocumentService>();
+        services.AddScoped<ITokenService, TokenService>();
     }
 }

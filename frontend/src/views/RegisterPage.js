@@ -1,6 +1,7 @@
 import React from "react";
 import PreregisterNavbar from "components/Navbars/PreregisterNavbar";
 import GoogleButton from "react-google-button";
+import { useAuth } from "../context/AuthContext";
 
 import {
   Badge,
@@ -16,6 +17,7 @@ import {
 
 function User() {
   const mainPanel = React.useRef(null);
+  const { login } = useAuth();
 
   return (
     <>
@@ -35,7 +37,7 @@ function User() {
                       <GoogleButton
                         label="Login con Google"
                         onClick={() => {
-                          console.log("Google button clicked");
+                          login();
                         }}
                       />
                     </Card.Body>

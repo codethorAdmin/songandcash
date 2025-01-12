@@ -17,7 +17,9 @@
 */
 import React, { Component } from "react";
 import { useLocation, Route, Switch } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
+import RegisterPage from "views/RegisterPage.js";
 import AdminNavbar from "components/Navbars/AdminNavbar";
 import Footer from "components/Footer/Footer";
 import Sidebar from "components/Sidebar/Sidebar";
@@ -28,6 +30,9 @@ import routes from "routes.js";
 import sidebarImage from "assets/img/sidebar-3.jpg";
 
 function Admin() {
+  const { user, loading, login, logout } = useAuth();
+  if (loading) return <div>Loading...</div>;
+
   const [image, setImage] = React.useState(sidebarImage);
   const [color, setColor] = React.useState("black");
   const [hasImage, setHasImage] = React.useState(true);
@@ -51,7 +56,7 @@ function Admin() {
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
-    mainPanel.current.scrollTop = 0;
+    if (mainPanel?.current) mainPanel.current.scrollTop = 0;
     if (
       window.innerWidth < 993 &&
       document.documentElement.className.indexOf("nav-open") !== -1
@@ -63,16 +68,24 @@ function Admin() {
   }, [location]);
   return (
     <>
-      <div className="wrapper">
-        <Sidebar color={color} image={hasImage ? image : ""} routes={routes} />
-        <div className="main-panel" ref={mainPanel}>
-          <AdminNavbar />
-          <div className="content">
-            <Switch>{getRoutes(routes)}</Switch>
+      {user ? (
+        <div className="wrapper">
+          <Sidebar
+            color={color}
+            image={hasImage ? image : ""}
+            routes={routes}
+          />
+          <div className="main-panel" ref={mainPanel}>
+            <AdminNavbar />
+            <div className="content">
+              <Routes>{getRoutes(routes)} </Routes>
+            </div>
+            {/* <Footer /> */}
           </div>
-          {/* <Footer /> */}
         </div>
-      </div>
+      ) : (
+        <RegisterPage />
+      )}
     </>
   );
 }

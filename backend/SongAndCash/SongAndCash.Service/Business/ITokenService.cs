@@ -1,6 +1,8 @@
+using System.Security.Claims;
+
 namespace SongAndCash.Service.Business;
 
-public class ITokenService
+public interface ITokenService
 {
-    
+    string GenerateJwtToken(ClaimsPrincipal user, GenerateJwtTokenOptions options);
 }
