@@ -16,7 +16,7 @@
 
 */
 import React, { Component } from "react";
-import { useLocation, Route, Switch } from "react-router-dom";
+import { useLocation, Routes, Route, Switch } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 import RegisterPage from "views/RegisterPage.js";

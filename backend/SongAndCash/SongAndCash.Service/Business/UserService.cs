@@ -58,7 +58,7 @@ public class UserService(IUserRepository userRepository, IUserMapper userMapper)
         return createdUser;
     }
 
-    private async Task<User?> GetUserByUsername(string username)
+    public async Task<User> GetUserByUsername(string username)
     {
         var user = await userRepository.GetUserByUsername(username);
         return user;

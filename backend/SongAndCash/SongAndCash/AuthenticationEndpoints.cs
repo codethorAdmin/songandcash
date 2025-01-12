@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -56,15 +55,26 @@ public static class AuthenticationEndpoints
         app.MapGet(
             "/api/userinfo",
             [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-            (HttpContext context, IUserService userService) =>
+            async (HttpContext context, IUserService userService) =>
             {
-                var user = context.User;
+                var username = context
+                    .User.Claims?.FirstOrDefault(x =>
+                        x.Type
+                        == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
+                    )
+                    ?.Value;
+                if (string.IsNullOrEmpty(username))
+                {
+                    return Results.Unauthorized();
+                }
+
+                var user = await userService.GetUserByUsername(username);
                 return Results.Ok(
                     new
                     {
-                        Email = user.FindFirst(ClaimTypes.Email)?.Value,
-                        Name = user.FindFirst(ClaimTypes.Name)?.Value,
-                        UserId = 1,
+                        Email = user.Username,
+                        Name = user.Email,
+                        UserId = user.Id,
                     }
                 );
             }

@@ -27,6 +27,7 @@ root.render(
             <Route path="/auth/callback" element={<AuthCallback />} />
             <Route path="/admin" element={<AdminLayout />} />
             <Route path="/" element={<Navigate to="/admin" replace />} />
+            <Route path="*" element={<Navigate to="/admin" replace />} />
           </Routes>
         </AuthProvider>
       </SettingsProvider>
