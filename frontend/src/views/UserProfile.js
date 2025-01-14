@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useServices } from "../serviceContainer";
 
 import {
   Badge,
@@ -13,6 +14,29 @@ import {
 } from "react-bootstrap";
 
 function User() {
+  const [userData, setUserData] = React.useState({
+    id: undefined,
+    email: undefined,
+    username: undefined,
+    spotifyLink: undefined,
+    isCompany: undefined,
+    fiscalIdentificationNumber: undefined,
+    firstName: undefined,
+    lastName: undefined,
+    dateOfBirth: undefined,
+    nationality: undefined,
+    iban: undefined,
+  });
+
+  const loadUser = async () => {
+    const userToLoad = await userService.getUser();
+    setUserData(userToLoad);
+  };
+  const userService = useServices().userService;
+  useEffect(() => {
+    loadUser();
+  }, []);
+
   return (
     <>
       <Container fluid>
@@ -29,10 +53,10 @@ function User() {
                       <Form.Group>
                         <label>E-mail</label>
                         <Form.Control
-                          defaultValue="Creative Code Inc."
                           disabled
-                          placeholder="Company"
+                          placeholder="Email"
                           type="text"
+                          value={userData.email}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -40,20 +64,19 @@ function User() {
                       <Form.Group>
                         <label>Nombre de usuario</label>
                         <Form.Control
-                          defaultValue="michael23"
                           placeholder="Username"
                           type="text"
+                          value={userData.username}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                     <Col className="pl-1" md="4">
                       <Form.Group>
-                        <label htmlFor="exampleInputEmail1">
-                          Link de Spotify
-                        </label>
+                        <label htmlFor="linkSpotify">Link de Spotify</label>
                         <Form.Control
-                          placeholder="Email"
-                          type="email"
+                          placeholder="Spotify Link"
+                          type="text"
+                          value={userData.spotifyLink}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -63,9 +86,9 @@ function User() {
                       <Form.Group>
                         <label>Nombre</label>
                         <Form.Control
-                          defaultValue="Mike"
-                          placeholder="Company"
+                          placeholder="Nombre"
                           type="text"
+                          value={userData.firstName}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -73,9 +96,9 @@ function User() {
                       <Form.Group>
                         <label>Apellidos</label>
                         <Form.Control
-                          defaultValue="Andrew"
-                          placeholder="Last Name"
+                          placeholder="Apellidos"
                           type="text"
+                          value={userData.firstName}
                         ></Form.Control>
                       </Form.Group>
                     </Col>

@@ -18,6 +18,7 @@
 import React, { Component } from "react";
 import { useLocation, Routes, Route, Switch } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { Outlet } from "react-router-dom";
 
 import RegisterPage from "views/RegisterPage.js";
 import AdminNavbar from "components/Navbars/AdminNavbar";
@@ -79,6 +80,11 @@ function Admin() {
             <AdminNavbar />
             <div className="content">
               <Routes>{getRoutes(routes)} </Routes>
+              <div className="admin-layout">
+                <main>
+                  <Outlet />
+                </main>
+              </div>
             </div>
             {/* <Footer /> */}
           </div>

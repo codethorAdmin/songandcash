@@ -1,5 +1,5 @@
 import UserProfile from "views/UserProfile.js";
-import TableList from "views/TableList.js";
+import RecoverableSales from "views/RecoverableSales";
 
 const dashboardRoutes = [
   {
@@ -10,18 +10,11 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/table",
+    path: "/recoverablesales",
     name: "Ventas recuperables",
     icon: "nc-icon nc-notes",
-    component: TableList,
+    component: RecoverableSales,
     layout: "/admin",
-  },
-  {
-    path: "/table",
-    name: "Cerrar sesión",
-    icon: "nc-icon nc-button-power",
-    component: TableList,
-    layout: "/closeSesion",
   },
 ];
 

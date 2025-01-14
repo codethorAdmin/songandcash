@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
         const userData = await response.json();
         setUser(userData);
         localStorage.setItem("jwt_token", token);
+        localStorage.setItem("user", JSON.stringify(userData));
       } else {
         logout();
       }

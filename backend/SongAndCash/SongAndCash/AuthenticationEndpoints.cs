@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -48,7 +49,7 @@ public static class AuthenticationEndpoints
                     );
                 }
 
-                return Results.Redirect($"{configuration.Value.UrlApp}/auth/error");
+                return Results.Redirect($"{configuration.Value.UrlApp}/logout");
             }
         );
 
@@ -76,6 +77,22 @@ public static class AuthenticationEndpoints
                         Name = user.Email,
                         UserId = user.Id,
                     }
+                );
+            }
+        );
+
+        app.MapPost(
+            "/auth/logout",
+            [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+            async (HttpContext context, IOptions<GlobalConfiguration> configuration) =>
+            {
+                await context.SignOutAsync(JwtBearerDefaults.AuthenticationScheme);
+                await context.SignOutAsync(GoogleDefaults.AuthenticationScheme);
+
+                await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+                return Results.Ok(
+                    new { redirectUrl = $"{configuration.Value.UrlApp}/auth/logged-out" }
                 );
             }
         );
