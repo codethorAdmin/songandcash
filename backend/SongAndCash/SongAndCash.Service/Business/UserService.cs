@@ -67,7 +67,7 @@ public class UserService(IUserRepository userRepository, IUserMapper userMapper)
     public async Task<User> UpdateUser(int id, UpdateUser updateUser)
     {
         var user = await GetUser(id);
-        ValidateUserProperties(updateUser);
+        //ValidateUserProperties(updateUser);
         UpdateUserProperties(user, updateUser);
         await userRepository.UpdateUser(user);
 
@@ -104,14 +104,17 @@ public class UserService(IUserRepository userRepository, IUserMapper userMapper)
 
     private void UpdateUserProperties(User user, UpdateUser updateUser)
     {
-        user.FirstName = updateUser.FirstName;
-        user.LastName = updateUser.LastName;
-        user.Username = updateUser.Username;
-        user.IsCompany = updateUser.IsCompany;
-        user.FiscalIdentificationNumber = updateUser.FiscalIdentificationNumber;
-        user.DateOfBirth = updateUser.DateOfBirth;
-        user.Iban = updateUser.Iban;
-        user.Nationality = updateUser.Nationality;
-        user.SpotifyLink = updateUser.SpotifyLink;
+        user.Username = updateUser.Username ?? user.Username;
+        user.SpotifyLink = updateUser.SpotifyLink ?? user.SpotifyLink;
+
+        user.FirstName = updateUser.FirstName ?? user.FirstName;
+        user.LastName = updateUser.LastName ?? user.LastName;
+
+        user.IsCompany = updateUser.IsCompany ?? user.IsCompany;
+        user.FiscalIdentificationNumber =
+            updateUser.FiscalIdentificationNumber ?? user.FiscalIdentificationNumber;
+        user.DateOfBirth = updateUser.DateOfBirth ?? user.DateOfBirth;
+        user.Iban = updateUser.Iban ?? user.Iban;
+        user.Nationality = updateUser.Nationality ?? user.Nationality;
     }
 }

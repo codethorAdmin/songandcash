@@ -3,7 +3,7 @@ using SongAndCash.Model.Entity;
 
 namespace SongAndCash.Service.Mapper;
 
-public class UserMapper: IUserMapper
+public class UserMapper : IUserMapper
 {
     public UserDto MapToUserDto(User user)
     {
@@ -47,7 +47,7 @@ public class UserMapper: IUserMapper
         {
             Email = user.Email,
             Username = user.Username,
-            SpotifyLink = user.SpotifyLink
+            SpotifyLink = user.SpotifyLink,
         };
     }
 
@@ -57,8 +57,8 @@ public class UserMapper: IUserMapper
         {
             Email = userDto.Email,
             Username = userDto.Username,
-            SpotifyLink = userDto.SpotifyLink
-        };    
+            SpotifyLink = userDto.SpotifyLink,
+        };
     }
 
     public UpdateUserDto MapToUpdateUserDto(UpdateUser user)
@@ -70,7 +70,7 @@ public class UserMapper: IUserMapper
             IsCompany = user.IsCompany,
             Nationality = user.Nationality,
             SpotifyLink = user.SpotifyLink,
-            Username = user.Username
+            Username = user.Username,
         };
     }
 
@@ -82,9 +82,11 @@ public class UserMapper: IUserMapper
             FiscalIdentificationNumber = userDto.FiscalIdentificationNumber,
             IsCompany = userDto.IsCompany,
             Nationality = userDto.Nationality,
-            SpotifyLink = userDto.SpotifyLink,
-            Username = userDto.Username
-        };    
+            SpotifyLink = userDto.SpotifyLink!,
+            Username = userDto.Username!,
+            LastName = userDto.LastName,
+            FirstName = userDto.FirstName,
+        };
     }
 
     public User FromCreateToUser(CreateUser user)

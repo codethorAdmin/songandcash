@@ -13,6 +13,11 @@ import {
   Col,
 } from "react-bootstrap";
 
+import {
+  defaultSuccess,
+  defaultError,
+} from "../components/Notifications/notificator";
+
 function User() {
   const [userData, setUserData] = React.useState({
     id: undefined,
@@ -32,6 +37,22 @@ function User() {
     const userToLoad = await userService.getUser();
     setUserData(userToLoad);
   };
+
+  const updateUserData = async (user) => {
+    const result = await userService.updateUser(user);
+    if (result.status === 204) {
+      defaultSuccess(
+        "Perfil actualizado",
+        "Los cambios se han guardado correctamente"
+      );
+    } else if (result.status >= 400) {
+      defaultError(
+        "Error al actualizar el perfil",
+        "Por favor, inténtalo de nuevo"
+      );
+    }
+  };
+
   const userService = useServices().userService;
   useEffect(() => {
     loadUser();
@@ -57,6 +78,9 @@ function User() {
                           placeholder="Email"
                           type="text"
                           value={userData.email}
+                          onChange={(e) => {
+                            setUserData({ ...userData, email: e.target.value });
+                          }}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -64,6 +88,7 @@ function User() {
                       <Form.Group>
                         <label>Nombre de usuario</label>
                         <Form.Control
+                          disabled
                           placeholder="Username"
                           type="text"
                           value={userData.username}
@@ -77,6 +102,12 @@ function User() {
                           placeholder="Spotify Link"
                           type="text"
                           value={userData.spotifyLink}
+                          onChange={(e) => {
+                            setUserData({
+                              ...userData,
+                              spotifyLink: e.target.value,
+                            });
+                          }}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -89,6 +120,12 @@ function User() {
                           placeholder="Nombre"
                           type="text"
                           value={userData.firstName}
+                          onChange={(e) => {
+                            setUserData({
+                              ...userData,
+                              firstName: e.target.value,
+                            });
+                          }}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -98,14 +135,22 @@ function User() {
                         <Form.Control
                           placeholder="Apellidos"
                           type="text"
-                          value={userData.firstName}
+                          value={userData.lastName}
+                          onChange={(e) => {
+                            setUserData({
+                              ...userData,
+                              lastName: e.target.value,
+                            });
+                          }}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
                   <Button
                     className="btn-fill pull-right"
-                    type="submit"
+                    onClick={async () => {
+                      await updateUserData(userData);
+                    }}
                     variant="info"
                   >
                     Guardar cambios

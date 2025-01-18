@@ -2,9 +2,9 @@ namespace SongAndCash.Model.Entity;
 
 public class UpdateUser
 {
-    public required string Username { get; set; }
-    public required string SpotifyLink { get; set; }
-    
+    public string? Username { get; set; }
+    public string? SpotifyLink { get; set; }
+
     public bool? IsCompany { get; set; }
     public string? FiscalIdentificationNumber { get; set; }
     public string? FirstName { get; set; }
